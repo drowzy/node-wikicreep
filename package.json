@@ -12,10 +12,10 @@
   "author":"Simon Thörnqvist <simon.thornqvist@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "http://github.com/drowzyorginal/wikicreep.git",
+    "url": "http://github.com/drowzyorginal/node-wikicreep.git",
   },
   "bugs": {
-    "url": "http://github.com/drowzyorginal/wikicreep/issues"
+    "url": "http://github.com/drowzyorginal/node-wikicreep/issues"
   },
   "engines": [
   "node >= 0.8.0"
@@ -24,6 +24,6 @@
     "request": "~2.21.1"
   },
   "devDependencies" : {
-    "mocha": "*",
+    "mocha": "*"
   }
 }
