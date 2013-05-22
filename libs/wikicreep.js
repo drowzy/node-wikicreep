@@ -12,6 +12,7 @@ var options = {
 var wikiOpt = {
 	text: 'text&page=',
 	links: 'links&page=',
+	images: 'links&page=',
 	format: { json: '&format=json', xml: '&format=xml' }
 };
 
@@ -27,23 +28,33 @@ exports.ContentFromChildren = function (hrefs) {
 
 };
 
-exports.ArticleContent = function (article, callback) {
-	console.log("ArticleContent for: " + article);
-	options.uri = URI + wikiOpt.text + ReadyQuery(article) + wikiOpt.format.json;
+var CallWikiAPI = function (callback) {
 	request(options, function(err, response, body) {
 		if(err) {
 			console.log(err);
 			callback(err, null);
-		}
-		else {
-			console.log("request complete");
-			callback(null, body);	
+		} else {
+			callback(null, body.parse);	
 		}
 	});
 };
+
+exports.ArticleContent = function (article, callback) {
+	console.log("ArticleContent for: " + article);
+	options.uri = URI + wikiOpt.text + ReadyQuery(article) + wikiOpt.format.json;
+	CallWikiAPI(callback);
+	
+};
 //TODO
-exports.ArticleChildren = function (article, sortType, limit) {
+exports.ArticleLinks = function (article, sortType, limit, callback) {
 	options.path = orgPath + wikiOpt.links + ReadyQuery(article) + wikiOpt.format.json;
+	CallWikiAPI(function (err, data) {
+		if(err) {
+			console.log(err);
+		} else {
+			callback(null, data.links)
+		}
+	});
 };
 
 
