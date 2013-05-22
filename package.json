@@ -10,7 +10,8 @@
   },
  "devDependencies" :
   {
-    "mocha" : "*"
+    "mocha" : "*",
+    "should" : "*"
   },
   "main": "index",
   "scripts": {
