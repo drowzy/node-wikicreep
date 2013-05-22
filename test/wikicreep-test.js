@@ -2,7 +2,7 @@ var wikicreep = require('../libs/wikicreep.js');
 var mocha = require('mocha');
 var should = require('should');
 
-describe('ArticleContent', function(){
+describe('ArticleContent', function() {
 	var title;
 	var text;
 	before(function(done) {
@@ -22,5 +22,24 @@ describe('ArticleContent', function(){
 
 	it('should have a proprety text which contains the same content as title', function() {
 		text['*'].should.include(title.title);
+	});
+});
+
+describe('ReadyQuery', function() {
+	var whiteSpace, underline, titlecase;
+	before(function(done) {
+		whitespace = wikicreep.ReadyQuery(" helloworld ");	
+		underline = wikicreep.ReadyQuery("hello world");
+		titlecase = wikicreep.ReadyQuery("hello great world");
+		done();
+	});
+	it('should remove whitespace at the begining and end', function(){
+		whitespace.should.equal("Helloworld");
+	});
+	it('should replace whitespace at the midle with underscore', function(){
+		underline.should.equal("Hello_World");
+	});
+	it('should titlecase the string' , function(){
+		titlecase.should.equal("Hello_Great_World");
 	});
 });

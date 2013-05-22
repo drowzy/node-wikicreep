@@ -19,9 +19,14 @@ var wikiOpt = {
 var Arrange = function (data, sortType, limit) {
 
 };
+var toTitleCase = function(toTransform) {
+	return toTransform.replace(/^\s+|\s$/g, '').replace(/\b([a-z])/g, function (_, initial) {
+  		return initial.toUpperCase();
+  });
+};
 
-var ReadyQuery = function(query) {
-	return query.replace(/^\s+|\s$/g, '').replace(' ','_');
+exports.ReadyQuery = function(query) {
+	return toTitleCase(query).split(' ').join('_');
 };
 
 exports.ContentFromChildren = function (hrefs) {
@@ -41,7 +46,7 @@ var CallWikiAPI = function (callback) {
 
 exports.ArticleContent = function (article, callback) {
 	console.log("ArticleContent for: " + article);
-	options.uri = URI + wikiOpt.text + ReadyQuery(article) + wikiOpt.format.json;
+	options.uri = URI + wikiOpt.text + this.ReadyQuery(article) + wikiOpt.format.json;
 	CallWikiAPI(callback);
 	
 };
