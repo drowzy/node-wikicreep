@@ -1,29 +1,19 @@
+
 {
-  "name": "wikicreep",
-  "description": "A wikipedia crawler",
-  "tags": [
-    "wikipedia",
-    "crawler",
-    "article",
-    "util",
-    "utility"
-  ],
-  "version": "0.0.1",
-  "author":"Simon Thörnqvist <simon.thornqvist@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/drowzyorginal/node-wikicreep.git",
+ "name": "wikicreep",
+ "author": "Simon Thornqvist <simon.thornqvist@gmail.com>",
+ "description": "A wikipedia crawler, return structured content from wiki articles",
+ "version": "0.0.1",
+ "dependencies":
+  {
+    "request" : "2.x.x"
   },
-  "bugs": {
-    "url": "http://github.com/drowzyorginal/node-wikicreep/issues"
+ "devDependencies" :
+  {
+    "mocha" : "*"
   },
-  "engines": [
-  "node >= 0.8.0"
-  ],
-  "dependencies": {
-    "request": "~2.21.1"
-  },
-  "devDependencies" : {
-    "mocha": "*"
+  "main": "index",
+  "scripts": {
+  "test" : "make test"
   }
 }
