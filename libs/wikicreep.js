@@ -37,7 +37,7 @@ var CallWikiAPI = function (callback) {
 	request(options, function(err, response, body) {
 		if(err) {
 			console.log(err);
-			callback(err, null);
+			callback(err);
 		} else {
 			callback(null, body.parse);	
 		}
@@ -56,6 +56,7 @@ exports.ArticleLinks = function (article, sortType, limit, callback) {
 	CallWikiAPI(function (err, data) {
 		if(err) {
 			console.log(err);
+			callback(err);
 		} else {
 			callback(null, data.links)
 		}
