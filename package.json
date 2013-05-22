@@ -2,7 +2,7 @@
 {
  "name": "wikicreep",
  "author": "Simon Thornqvist <simon.thornqvist@gmail.com>",
- "description": "A wikipedia crawler, return structured content from wiki articles",
+ "description": "Returns structured content from wiki articles",
  "version": "0.0.1",
  "dependencies":
   {
