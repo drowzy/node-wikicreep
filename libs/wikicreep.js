@@ -44,15 +44,16 @@ var CallWikiAPI = function (callback) {
 	});
 };
 
+
 exports.ArticleContent = function (article, callback) {
 	console.log("ArticleContent for: " + article);
 	options.uri = URI + wikiOpt.text + this.ReadyQuery(article) + wikiOpt.format.json;
 	CallWikiAPI(callback);
 	
 };
-//TODO
+
 exports.ArticleLinks = function (article, sortType, limit, callback) {
-	options.path = orgPath + wikiOpt.links + ReadyQuery(article) + wikiOpt.format.json;
+	options.uri = URI + wikiOpt.links + this.ReadyQuery(article) + wikiOpt.format.json;
 	CallWikiAPI(function (err, data) {
 		if(err) {
 			console.log(err);

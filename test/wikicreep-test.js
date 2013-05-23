@@ -5,14 +5,14 @@ var should = require('should');
 describe('ArticleContent', function() {
 	var title;
 	var text;
-	before(function(done) {
+	before(function (done) {
 		wikicreep.ArticleContent('Barack Obama', function(err, data){
 			title = data;
 			text = data.text;
 			done();
 		});
 	});		
-	it('should have a property title ', function() {
+	it('should have a property title ', function () {
 		title.should.have.property('title','Barack Obama');
 	});
 	
@@ -27,7 +27,7 @@ describe('ArticleContent', function() {
 
 describe('ReadyQuery', function() {
 	var whiteSpace, underline, titlecase;
-	before(function(done) {
+	before(function (done) {
 		whitespace = wikicreep.ReadyQuery(" helloworld ");	
 		underline = wikicreep.ReadyQuery("hello world");
 		titlecase = wikicreep.ReadyQuery("hello great world");
@@ -41,5 +41,18 @@ describe('ReadyQuery', function() {
 	});
 	it('should titlecase the string' , function(){
 		titlecase.should.equal("Hello_Great_World");
+	});
+});
+
+describe('ArticleLinks', function () {
+	var links;
+	before(function (done){
+		wikicreep.ArticleLinks('Barack Obama',"","",function (err, data){
+			links = data;
+			done();
+		});
+	});
+	it('should have link name for each link', function () {
+		links[0]['*'].should.include('Obama');
 	});
 });
