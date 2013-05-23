@@ -55,4 +55,8 @@ describe('ArticleLinks', function () {
 	it('should have link name for each link', function () {
 		links[0]['*'].should.include('Obama');
 	});
+
+	it('should have a namespace of 0 Main/Article', function (){
+		links[0].ns.should.equal(0);	
+	});
 });

@@ -49,7 +49,6 @@ exports.ArticleContent = function (article, callback) {
 	console.log("ArticleContent for: " + article);
 	options.uri = URI + wikiOpt.text + this.ReadyQuery(article) + wikiOpt.format.json;
 	CallWikiAPI(callback);
-	
 };
 
 exports.ArticleLinks = function (article, sortType, limit, callback) {
