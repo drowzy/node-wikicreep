@@ -1,5 +1,6 @@
 
 var request = require('request');
+var $ = require('jquery');
 var URI = 'http://en.wikipedia.org/w/api.php?action=parse&prop='; 
 var options = {
 	uri: '',
@@ -25,14 +26,6 @@ var toTitleCase = function(toTransform) {
   });
 };
 
-exports.ReadyQuery = function(query) {
-	return toTitleCase(query).split(' ').join('_');
-};
-
-exports.ContentFromChildren = function (hrefs) {
-
-};
-
 var CallWikiAPI = function (callback) {
 	request(options, function(err, response, body) {
 		if(err) {
@@ -44,6 +37,29 @@ var CallWikiAPI = function (callback) {
 	});
 };
 
+var parseArticle = function(articleData, limit, callback) {
+	var data, content = {};
+	data = $(articleData.text).find('p').first().text();
+	if(limit) {
+		data = data.substring(0,limit);
+	}
+	// Defaults to substring to the first dot
+	else {
+		data = data.substring(0,data.indexOf('.') + 1).replace('( listen); ','');	
+	}
+	content.title = articleData.title; 
+	content.text = data;
+	callback(null, data);
+
+};
+
+exports.ReadyQuery = function(query) {
+	return toTitleCase(query).split(' ').join('_');
+};
+
+exports.ContentFromChildren = function (hrefs) {
+
+};
 
 exports.ArticleContent = function (article, callback) {
 	console.log("ArticleContent for: " + article);
@@ -62,5 +78,3 @@ exports.ArticleLinks = function (article, sortType, limit, callback) {
 		}
 	});
 };
-
-
