@@ -23,6 +23,8 @@ describe('ArticleContent', function() {
 	it('should have a proprety text which contains the same content as title', function() {
 		text['*'].should.include(title.title);
 	});
+	it('should find the first paragraph and extract the text', function() {
+	});
 });
 
 describe('ReadyQuery', function() {
