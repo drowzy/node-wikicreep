@@ -1,25 +1,11 @@
 
 var request = require('request');
 var $ = require('jquery').create();
-var URI = 'http://en.wikipedia.org/w/api.php?action=parse&prop='; 
-var options = {
-	uri: '',
-	method: 'GET',
-	followRedirect: true,
-	json: true,
-	maxRedirects: 10
-};
-
-var wikiOpt = {
-	text: 'text&page=',
-	links: 'links&page=',
-	images: 'links&page=',
-	format: { json: '&format=json', xml: '&format=xml' }
-};
 
 var Arrange = function (data, sortType, limit) {
 
 };
+
 var toTitleCase = function(toTransform) {
 	return toTransform.replace(/^\s+|\s$/g, '').replace(/\b([a-z])/g, function (_, initial) {
   		return initial.toUpperCase();
@@ -34,13 +20,18 @@ var CallWikiAPI = function (article, prop, callback) {
 };
 
 var parseArticle = function(articleData, limit, callback) {
-	var content = {};
-	var data = $("<div>" + articleData.text['*'] + "</div>").find('p').first().text();
-	console.log(data);
-	content.title = articleData.title; 
-	content.text = data.substring(0,data.indexOf('.') + 1).replace('( listen); ','');	
-	callback(null, content);
+	var data = $("<div>" + articleData.text['*'] + "</div>");
+	var redirect = data.find('li:contains("REDIRECT") a').text();
 
+	if(redirect != '') {
+     callWikiApi(redirect);
+        return;
+    }
+
+	var content = {};
+	content.text = data.find('p').first().text().replace('( listen); ','');
+	content.title = articleData.title; 
+	callback(null, content);
 };
 
 exports.ReadyQuery = function(query) {
@@ -51,7 +42,7 @@ exports.ContentFromChildren = function (hrefs) {
 
 };
 
-exports.ArticleContent = function (article, callback) {
+exports.ArticleContent = function (article, limit, callback) {
 	console.log("ArticleContent for: " + article);
 	CallWikiAPI(this.ReadyQuery(article), "text|images", function (err, data){
 		if(err) {
@@ -60,7 +51,7 @@ exports.ArticleContent = function (article, callback) {
 		}
 		else {
 			console.log("Parssing Data");
-			parseArticle(data,null,callback);	
+			parseArticle(data,limit,callback);	
 		}
 	});
 };
