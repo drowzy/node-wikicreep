@@ -1,6 +1,6 @@
 
 var request = require('request');
-var $ = require('jquery');
+var $ = require('jquery').create();
 var URI = 'http://en.wikipedia.org/w/api.php?action=parse&prop='; 
 var options = {
 	uri: '',
@@ -26,30 +26,21 @@ var toTitleCase = function(toTransform) {
   });
 };
 
-var CallWikiAPI = function (callback) {
-	request(options, function(err, response, body) {
-		if(err) {
-			console.log(err);
-			callback(err);
-		} else {
-			callback(null, body.parse);	
-		}
-	});
+var CallWikiAPI = function (article, prop, callback) {
+	console.log("Calling Wikipedia Api");
+	$.getJSON('http://en.wikipedia.org/w/api.php?action=parse&format=json&callback=?', {page:article, prop:prop, uselang:'en'}, function(data) {
+		callback(null, data.parse);
+	});		
 };
 
 var parseArticle = function(articleData, limit, callback) {
-	var data, content = {};
-	data = $(articleData.text).find('p').first().text();
-	if(limit) {
-		data = data.substring(0,limit);
-	}
-	// Defaults to substring to the first dot
-	else {
-		data = data.substring(0,data.indexOf('.') + 1).replace('( listen); ','');	
-	}
+	var content = {};
+	var data = $("<div>" + articleData.text['*'] + "</div>").find('p').first().text();
+	console.log(data);
 	content.title = articleData.title; 
-	content.text = data;
-	callback(null, data);
+	//content.text = data.substring(0,data.indexOf('.') + 1).replace('( listen); ','');	
+	console.log(content.text);
+	callback(null, content);
 
 };
 
@@ -63,13 +54,20 @@ exports.ContentFromChildren = function (hrefs) {
 
 exports.ArticleContent = function (article, callback) {
 	console.log("ArticleContent for: " + article);
-	options.uri = URI + wikiOpt.text + this.ReadyQuery(article) + wikiOpt.format.json;
-	CallWikiAPI(callback);
+	CallWikiAPI(this.ReadyQuery(article), "text|images", function (err, data){
+		if(err) {
+			console.log(err);
+			throw err;
+		}
+		else {
+			console.log("Parssing Data");
+			parseArticle(data,null,callback);	
+		}
+	});
 };
 
 exports.ArticleLinks = function (article, sortType, limit, callback) {
-	options.uri = URI + wikiOpt.links + this.ReadyQuery(article) + wikiOpt.format.json;
-	CallWikiAPI(function (err, data) {
+	CallWikiAPI(this.ReadyQuery(article), "links", function (err, data) {
 		if(err) {
 			console.log(err);
 			callback(err);
