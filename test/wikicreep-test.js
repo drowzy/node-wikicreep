@@ -3,27 +3,32 @@ var mocha = require('mocha');
 var should = require('should');
 
 describe('ArticleContent', function() {
-	var title;
+	var content;
 	var text;
+	this.timeout(50000);
 	before(function (done) {
-		wikicreep.ArticleContent('Barack Obama', function(err, data){
-			title = data;
-			text = data.text;
+		wikicreep.ArticleContent("Shaquille O'Neal", function(err, data){
+			content = data;
 			done();
 		});
 	});		
 	it('should have a property title ', function () {
-		title.should.have.property('title','Barack Obama');
+		content.should.have.property('title', content.title);
 	});
 	
-	it('should have a proprety text which does not contain a redirect', function () {
-		text['*'].should.not.include('REDIRECT');	
+	it('should the text should not incldue redirect', function () {
+		content.text.should.not.include('REDIRECT');	
 	});
 
-	it('should have a proprety text which contains the same content as title', function() {
-		text['*'].should.include(title.title);
-	});
-	it('should find the first paragraph and extract the text', function() {
+	describe('with the text property', function () {
+
+
+		it('should find the first paragraph and extract the text', function() {
+			content.text.should.not.be.empty;
+		});
+		it('should have a last char equal to a dot', function () {
+			content.text[content.text.length - 1].should.be.equal(".");
+		});
 	});
 });
 

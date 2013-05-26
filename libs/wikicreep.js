@@ -38,8 +38,7 @@ var parseArticle = function(articleData, limit, callback) {
 	var data = $("<div>" + articleData.text['*'] + "</div>").find('p').first().text();
 	console.log(data);
 	content.title = articleData.title; 
-	//content.text = data.substring(0,data.indexOf('.') + 1).replace('( listen); ','');	
-	console.log(content.text);
+	content.text = data.substring(0,data.indexOf('.') + 1).replace('( listen); ','');	
 	callback(null, content);
 
 };
