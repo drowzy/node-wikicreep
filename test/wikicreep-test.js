@@ -34,7 +34,7 @@ describe('ArticleContent', function() {
 		});
 
 		it('should have a last char equal to a dot', function () {
-			content.text[content.text.length - 1].should.be.equal(".");
+			ArticleContenttext[content.text.length - 1].should.be.equal(".");
 		});
 	});
 });
