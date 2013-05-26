@@ -7,7 +7,7 @@
  "dependencies":
   {
     "request" : "2.x.x",
-    "jquery" : "" 
+    "jquery" : "*" 
   },
  "devDependencies" :
   {
