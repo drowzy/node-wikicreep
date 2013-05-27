@@ -1,4 +1,4 @@
-var wikicreep = require('../libs/wikicreep.js');
+var wikicreep = require('../lib/wikicreep.js');
 var mocha = require('mocha');
 var should = require('should');
 
@@ -9,7 +9,7 @@ describe('ArticleContent', function() {
 
 	before(function (done) {
 
-		wikicreep.ArticleContent("Shaquille O'Neal", false , function (err, data){
+		wikicreep.ArticleContent("Shaquille O'Neal", function (err, data){
 			content = data;
 			done();
 		});
@@ -34,7 +34,7 @@ describe('ArticleContent', function() {
 		});
 
 		it('should have a last char equal to a dot', function () {
-			ArticleContenttext[content.text.length - 1].should.be.equal(".");
+			content.text[content.text.length - 1].should.be.equal(".");
 		});
 	});
 });
@@ -60,8 +60,10 @@ describe('ReadyQuery', function() {
 
 describe('ArticleLinks', function () {
 	var links;
+	console.log("before");
 	before(function (done){
-		wikicreep.ArticleLinks('Barack Obama',"","",function (err, data){
+		wikicreep.ArticleLinks('Barack Obama', function (err, data){
+			console.log("in test");
 			links = data;
 			done();
 		});
@@ -73,4 +75,19 @@ describe('ArticleLinks', function () {
 	it('should have a namespace of 0 Main/Article', function (){
 		links[0].ns.should.equal(0);	
 	});
+});
+
+describe('ArticleCategories', function () {
+	var categories;
+	this.timeout(40000);
+	before(function (done) {
+		wikicreep.ArticleCategories("Barack Obama", function (err, data) {
+			categories = data;
+			done();
+		});
+	});	
+	it('should have a length larger than 0', function () {
+		categories.length.should.not.be.empty;
+	});
+
 });
