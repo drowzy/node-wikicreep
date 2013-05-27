@@ -9,7 +9,7 @@ describe('ArticleContent', function() {
 
 	before(function (done) {
 
-		wikicreep.ArticleContent("Shaquille O'Neal", function (err, data){
+		wikicreep.text("Shaquille O'Neal", function (err, data){
 			content = data;
 			done();
 		});
@@ -42,9 +42,9 @@ describe('ArticleContent', function() {
 describe('ReadyQuery', function() {
 	var whiteSpace, underline, titlecase;
 	before(function (done) {
-		whitespace = wikicreep.ReadyQuery(" helloworld ");	
-		underline = wikicreep.ReadyQuery("hello world");
-		titlecase = wikicreep.ReadyQuery("hello great world");
+		whitespace = wikicreep.readyQuery(" helloworld ");	
+		underline = wikicreep.readyQuery("hello world");
+		titlecase = wikicreep.readyQuery("hello great world");
 		done();
 	});
 	it('should remove whitespace at the begining and end', function(){
@@ -62,7 +62,7 @@ describe('ArticleLinks', function () {
 	var links;
 	this.timeout(40000);
 	before(function (done){
-		wikicreep.ArticleLinks('Barack Obama', function (err, data){
+		wikicreep.links('Barack Obama', function (err, data){
 			links = data;
 			done();
 		});
@@ -81,7 +81,7 @@ describe('ArticleCategories', function () {
 	console.log("categories");
 	this.timeout(40000);
 	before(function (done) {
-		wikicreep.ArticleCategories("Albert Einstein", function (err, data) {
+		wikicreep.categories("Albert Einstein", function (err, data) {
 			categories = data;
 			done();
 		});
