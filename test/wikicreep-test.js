@@ -60,10 +60,9 @@ describe('ReadyQuery', function() {
 
 describe('ArticleLinks', function () {
 	var links;
-	console.log("before");
+	this.timeout(40000);
 	before(function (done){
 		wikicreep.ArticleLinks('Barack Obama', function (err, data){
-			console.log("in test");
 			links = data;
 			done();
 		});
@@ -79,15 +78,16 @@ describe('ArticleLinks', function () {
 
 describe('ArticleCategories', function () {
 	var categories;
+	console.log("categories");
 	this.timeout(40000);
 	before(function (done) {
-		wikicreep.ArticleCategories("Barack Obama", function (err, data) {
+		wikicreep.ArticleCategories("Albert Einstein", function (err, data) {
 			categories = data;
 			done();
 		});
 	});	
 	it('should have a length larger than 0', function () {
-		categories.length.should.not.be.empty;
+		categories.should.not.be.empty;
 	});
 
-});
+});	
