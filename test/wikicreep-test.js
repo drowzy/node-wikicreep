@@ -78,7 +78,6 @@ describe('ArticleLinks', function () {
 
 describe('ArticleCategories', function () {
 	var categories;
-	console.log("categories");
 	this.timeout(40000);
 	before(function (done) {
 		wikicreep.categories("Albert Einstein", function (err, data) {
@@ -86,7 +85,7 @@ describe('ArticleCategories', function () {
 			done();
 		});
 	});	
-	it('should have a length larger than 0', function () {
+	it('should return an array which is not empty', function () {
 		categories.should.not.be.empty;
 	});
 
