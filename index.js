@@ -6,5 +6,6 @@ module.exports= {
 	text: wiki.text,
 	links: wiki.links,
 	categories: wiki.categories,
-	parseArticle: util.parseArticle	
+	simularity: wiki.simularity,
+	parseArticle: util.parseArticle
 };
